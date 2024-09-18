@@ -368,12 +368,18 @@ export interface ApiStartStart extends Schema.CollectionType {
     singularName: 'start';
     pluralName: 'starts';
     displayName: 'start';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
     email: Attribute.Email;
+    companyname: Attribute.String;
+    password: Attribute.Password;
+    logo: Attribute.Media<'images', true>;
+    companySize: Attribute.String;
+    industry: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
