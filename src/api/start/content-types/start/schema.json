@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "starts",
+  "info": {
+    "singularName": "start",
+    "pluralName": "starts",
+    "displayName": "start"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email"
+    }
+  }
+}
