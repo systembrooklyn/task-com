@@ -12,18 +12,18 @@ module.exports = {
     routes: [
       {
         method: 'GET',
-        path: '/starts/check',  // المسار للتحقق من البريد الإلكتروني
-        handler: 'start.checkEmail',  // الوظيفة التي سيتم استدعاؤها
+        path: '/starts/check',  
+        handler: 'start.checkEmail', 
         config: {
-          auth: false,  // يمكنك تفعيل أو تعطيل الصلاحيات هنا
+          auth: false,  
         },
       },
       {
         method: 'POST',
-        path: '/starts/check-credentials', // المسار الجديد للتحقق من بيانات تسجيل الدخول
-        handler: 'start.checkCredentials', // الوظيفة للتحقق من البريد الإلكتروني وكلمة المرور
+        path: '/starts/check-credentials', 
+        handler: 'start.checkCredentials', 
         config: {
-          auth: false, // لا حاجة للتوثيق في التحقق من تسجيل الدخول
+          auth: false, 
         },
       },
       {
