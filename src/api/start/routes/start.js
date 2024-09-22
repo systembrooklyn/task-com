@@ -18,6 +18,14 @@ module.exports = {
           auth: false,  // يمكنك تفعيل أو تعطيل الصلاحيات هنا
         },
       },
+      {
+        "method": "GET",
+        "path": "/starts",
+        "handler": "start.find",
+        "config": {
+          "policies": []
+        }
+      }
     ],
   };
   
