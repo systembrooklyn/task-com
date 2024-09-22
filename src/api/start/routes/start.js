@@ -25,6 +25,22 @@ module.exports = {
         "config": {
           "policies": []
         }
+      },
+      {
+        "method": "POST",
+        "path": "/starts",
+        "handler": "start.create",
+        "config": {
+          "policies": []
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/starts/{id}",
+        "handler": "start.update",
+        "config": {
+          "policies": []
+        }
       }
     ],
   };
