@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         "method": "PUT",
-        "path": "/starts/{id}",
+        "path": "/starts/:id",
         "handler": "start.update",
         "config": {
           "policies": []
