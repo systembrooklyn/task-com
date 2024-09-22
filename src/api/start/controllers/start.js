@@ -27,6 +27,32 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
 
     return ctx.send({ exists: false, message: 'البريد الإلكتروني غير مسجل.' });
   },
+   // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
+   async checkCredentials(ctx) {
+    const { email, password } = ctx.request.body;
+
+    if (!email || !password) {
+      return ctx.badRequest('Email and password are required.');
+    }
+
+    // التحقق من وجود المستخدم بالبريد الإلكتروني
+    const user = await strapi.db.query('api::start.start').findOne({
+      where: { email: email }
+    });
+
+    if (!user) {
+      return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
+    }
+
+    // التحقق من مطابقة كلمة المرور
+    const isValidPassword = user.password === password; // يفترض هنا أن كلمة المرور غير مشفرة، إذا كانت مشفرة يجب استخدام `bcrypt` للتحقق
+    if (!isValidPassword) {
+      return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
+    }
+
+    // إذا كانت البيانات صحيحة
+    return ctx.send({ success: true, message: 'تسجيل الدخول ناجح.', user });
+  },
 
   // وظيفة لجلب البيانات (find)
   async find(ctx) {

@@ -19,6 +19,14 @@ module.exports = {
         },
       },
       {
+        method: 'POST',
+        path: '/starts/check-credentials', // المسار الجديد للتحقق من بيانات تسجيل الدخول
+        handler: 'start.checkCredentials', // الوظيفة للتحقق من البريد الإلكتروني وكلمة المرور
+        config: {
+          auth: false, // لا حاجة للتوثيق في التحقق من تسجيل الدخول
+        },
+      },
+      {
         "method": "GET",
         "path": "/starts",
         "handler": "start.find",
