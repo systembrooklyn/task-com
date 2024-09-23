@@ -33,6 +33,12 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
     // دالة التحقق من البريد الإلكتروني وكلمة المرور
     async checkCredentials(ctx) {
       const { email, password } = ctx.request.body;
+
+  console.log(password);
+
+    
+    
+      // التحقق من وجود البريد الإلكتروني وكلمة المرور
     
       if (!email || !password) {
         return ctx.badRequest('Email and password are required.');
@@ -42,9 +48,10 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
       const user = await strapi.db.query('api::start.start').findOne({
         where: { email: email }
       });
-      
+
         // طباعة بيانات المستخدم المسترجعة من قاعدة البيانات
   console.log('User fetched from database:', user);
+
     
       if (!user) {
         return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
