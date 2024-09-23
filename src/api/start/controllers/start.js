@@ -3,6 +3,8 @@
 /**
  * start controller
  */
+const bcrypt = require('bcrypt');
+
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
@@ -28,7 +30,8 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
     return ctx.send({ exists: false, message: 'البريد الإلكتروني غير مسجل.' });
   },
    // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
-   async checkCredentials(ctx) {
+    // دالة التحقق من البريد الإلكتروني وكلمة المرور
+  async checkCredentials(ctx) {
     const { email, password } = ctx.request.body;
 
     if (!email || !password) {
@@ -44,8 +47,9 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
       return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
     }
 
-    // التحقق من مطابقة كلمة المرور
-    const isValidPassword = user.password === password; // يفترض هنا أن كلمة المرور غير مشفرة، إذا كانت مشفرة يجب استخدام `bcrypt` للتحقق
+    // التحقق من مطابقة كلمة المرور باستخدام bcrypt
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
     if (!isValidPassword) {
       return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
     }
@@ -70,6 +74,12 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
     if (!data) {
       return ctx.badRequest('Data is required.');
     }
+
+    // تشفير كلمة المرور قبل التخزين
+  const hashedPassword = await bcrypt.hash(data.password, 10); // الرقم 10 هو عدد الجولات (salt rounds)
+
+  // تحديث البيانات مع كلمة المرور المشفرة
+  data.password = hashedPassword;
 
     const entity = await strapi.entityService.create('api::start.start', {
       data: data,
