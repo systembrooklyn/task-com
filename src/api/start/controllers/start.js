@@ -75,12 +75,6 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
       return ctx.badRequest('Data is required.');
     }
 
-    // تشفير كلمة المرور قبل التخزين
-  const hashedPassword = await bcrypt.hash(data.password, 10); // الرقم 10 هو عدد الجولات (salt rounds)
-
-  // تحديث البيانات مع كلمة المرور المشفرة
-  data.password = hashedPassword;
-
     const entity = await strapi.entityService.create('api::start.start', {
       data: data,
     });
@@ -96,6 +90,12 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
     if (!data) {
       return ctx.badRequest('Data is required.');
     }
+
+        // تشفير كلمة المرور قبل التخزين
+  const hashedPassword = await bcrypt.hash(data.password, 10); // الرقم 10 هو عدد الجولات (salt rounds)
+
+  // تحديث البيانات مع كلمة المرور المشفرة
+  data.password = hashedPassword;
 
     const updatedEntity = await strapi.entityService.update('api::start.start', id, {
       data: data,
