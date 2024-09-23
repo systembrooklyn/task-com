@@ -99,6 +99,8 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
   async update(ctx) {
     const { id } = ctx.params;
     const { data } = ctx.request.body;  // الوصول إلى البيانات المرسلة في الطلب
+    
+    console.log(data)
 
     if (!data) {
       return ctx.badRequest('Data is required.');
