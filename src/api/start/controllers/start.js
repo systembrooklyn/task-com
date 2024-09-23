@@ -31,32 +31,35 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
   },
    // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
     // دالة التحقق من البريد الإلكتروني وكلمة المرور
-  async checkCredentials(ctx) {
-    const { email, password } = ctx.request.body;
-
-    if (!email || !password) {
-      return ctx.badRequest('Email and password are required.');
-    }
-
-    // التحقق من وجود المستخدم بالبريد الإلكتروني
-    const user = await strapi.db.query('api::start.start').findOne({
-      where: { email: email }
-    });
-
-    if (!user) {
-      return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
-    }
-
-    // التحقق من مطابقة كلمة المرور باستخدام bcrypt
-    const isValidPassword = await bcrypt.compare(password, user.password);
-
-    if (!isValidPassword) {
-      return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
-    }
-
-    // إذا كانت البيانات صحيحة
-    return ctx.send({ success: true, message: 'تسجيل الدخول ناجح.', user });
-  },
+    async checkCredentials(ctx) {
+      const { email, password } = ctx.request.body;
+    
+      if (!email || !password) {
+        return ctx.badRequest('Email and password are required.');
+      }
+    
+      // التحقق من وجود المستخدم بالبريد الإلكتروني
+      const user = await strapi.db.query('api::start.start').findOne({
+        where: { email: email }
+      });
+    
+      if (!user) {
+        return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
+      }
+    
+      // التحقق من مطابقة كلمة المرور باستخدام bcrypt
+      const isValidPassword = await bcrypt.compare(password, user.password);
+    
+      if (!isValidPassword) {
+        return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
+      }
+    
+      // إزالة كلمة المرور من الاستجابة لزيادة الأمان
+      delete user.password;
+    
+      return ctx.send({ success: true, message: 'تسجيل الدخول ناجح.', user });
+    },
+    
 
   // وظيفة لجلب البيانات (find)
   async find(ctx) {
