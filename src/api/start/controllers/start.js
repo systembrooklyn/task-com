@@ -42,6 +42,9 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
       const user = await strapi.db.query('api::start.start').findOne({
         where: { email: email }
       });
+      
+        // طباعة بيانات المستخدم المسترجعة من قاعدة البيانات
+  console.log('User fetched from database:', user);
     
       if (!user) {
         return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
