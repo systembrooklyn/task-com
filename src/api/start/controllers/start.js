@@ -112,6 +112,8 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   async sendResetPassword(ctx) {
     const { email } = ctx.request.body;
 
+    console.log(email);
+
     // التحقق من وجود البريد الإلكتروني
     if (!email) {
       return ctx.badRequest('Email is required.');
@@ -128,6 +130,8 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
     // إنشاء رابط إعادة تعيين كلمة المرور
     const resetPasswordLink = `https://task-com.onrender.com/reset-password?email=${email}`;
+
+    console.log("resetPasswordLink : " + resetPasswordLink)
 
     // إرسال البريد الإلكتروني مع الرابط
     try {
