@@ -108,4 +108,40 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
     return ctx.send({ data: updatedEntity });
   },
+
+  async sendResetPassword(ctx) {
+    const { email } = ctx.request.body;
+
+    // التحقق من وجود البريد الإلكتروني
+    if (!email) {
+      return ctx.badRequest('Email is required.');
+    }
+
+    // البحث عن المستخدم بالبريد الإلكتروني
+    const user = await strapi.db.query('api::start.start').findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      return ctx.send({ success: false, message: 'Email not found.' });
+    }
+
+    // إنشاء رابط إعادة تعيين كلمة المرور
+    const resetPasswordLink = `https://task-com.onrender.com/reset-password?email=${email}`;
+
+    // إرسال البريد الإلكتروني مع الرابط
+    try {
+      await strapi.plugins['email'].services.email.send({
+        to: user.email,
+        subject: 'Reset Your Password',
+        text: `Please reset your password using the following link: ${resetPasswordLink}`,
+        html: `<p>Please reset your password by clicking the link below:</p><a href="${resetPasswordLink}">Reset Password</a>`,
+      });
+
+      return ctx.send({ success: true, message: 'Reset link sent to your email.' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return ctx.send({ success: false, message: 'Error sending reset link.' });
+    }
+  },
 }));

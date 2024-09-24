@@ -27,6 +27,14 @@ module.exports = {
         },
       },
       {
+        method: 'POST',
+        path: '/starts/send-reset-password',
+        handler: 'start.sendResetPassword',
+        config: {
+          auth: false, // المستخدم غير مطالب بتسجيل الدخول
+        },
+      },
+      {
         "method": "GET",
         "path": "/starts",
         "handler": "start.find",
