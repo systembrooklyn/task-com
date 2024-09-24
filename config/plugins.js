@@ -1,21 +1,21 @@
 module.exports = ({ env }) => ({
     email: {
-      config: {
-        provider: 'nodemailer',
-        providerOptions: {
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-            user: env('SMTP_USERNAME'),
-            pass: env('SMTP_PASSWORD'),
-          },
-          // You can configure additional options here
+      provider: 'nodemailer',
+      providerOptions: {
+        service: 'gmail', // أو 'yahoo' أو 'outlook'، حسب خدمة البريد التي تستخدمها
+        auth: {
+          user: env('SMTP_USER'),
+          pass: env('SMTP_PASSWORD'),
         },
-        settings: {
-          defaultFrom: env('SMTP_USERNAME'),
-          defaultReplyTo: env('SMTP_USERNAME'),
+        // اختياري: إعدادات الاتصال
+        secure: true, // إذا كنت تستخدم SSL/TLS
+        tls: {
+          rejectUnauthorized: false, // يمكنك تغييره بناءً على المتطلبات الأمنية
         },
+      },
+      settings: {
+        defaultFrom: env('SMTP_USER'),
+        defaultReplyTo: env('SMTP_PASSWORD'),
       },
     },
   });
