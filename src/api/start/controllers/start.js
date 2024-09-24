@@ -58,28 +58,13 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       });
     }
 
-    if (user.password) {
-      // تشفير كلمة المرور قبل التحديث
-      const hashedPassword = await bcrypt.hash(user.password, 10); // الرقم 10 هو عدد الجولات (salt rounds)
-      user.password = hashedPassword;
+    // التحقق من مطابقة كلمة المرور باستخدام bcrypt
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    console.log("Is password valid:", isValidPassword);
 
-      // طباعة بيانات المستخدم المسترجعة من قاعدة البيانات
-      console.log("User fetched from database:", user);
-      // التحثث من مطابقة كلمة المرور 
-      const isValidPassword = await bcrypt.compare(password, hashedPassword);
-      console.log("Is password valid:", isValidPassword);
-
-      
-      if (!isValidPassword) {
-        return ctx.send({ success: false, message: "كلمة المرور غير صحيحة." });
-      }
+    if (!isValidPassword) {
+      return ctx.send({ success: false, message: "كلمة المرور غير صحيحة." });
     }
-
-    // // التحقق من مطابقة كلمة المرور باستخدام bcrypt
-    // const isValidPassword = await bcrypt.compare(password, user.password);
-    // console.log("Is password valid:", isValidPassword);
-
-    
 
     // إزالة كلمة المرور من الاستجابة لزيادة الأمان
     delete user.password;
