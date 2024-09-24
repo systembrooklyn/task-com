@@ -1,79 +1,80 @@
-'use strict';
+"use strict";
 
 /**
  * start controller
  */
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
+const { createCoreController } = require("@strapi/strapi").factories;
 
-const { createCoreController } = require('@strapi/strapi').factories;
-
-module.exports = createCoreController('api::start.start', ({ strapi }) => ({
-
+module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   // وظيفة للتحقق من البريد الإلكتروني
   async checkEmail(ctx) {
     const { email } = ctx.query;
 
     if (!email) {
-      return ctx.badRequest('Email parameter is required.');
+      return ctx.badRequest("Email parameter is required.");
     }
 
     // التحقق مما إذا كان البريد الإلكتروني موجودًا
-    const existingEmail = await strapi.db.query('api::start.start').findOne({
-      where: { email: email }
+    const existingEmail = await strapi.db.query("api::start.start").findOne({
+      where: { email: email },
     });
 
     if (existingEmail) {
-      return ctx.send({ exists: true, message: 'البريد الإلكتروني مسجل بالفعل.' });
+      return ctx.send({
+        exists: true,
+        message: "البريد الإلكتروني مسجل بالفعل.",
+      });
     }
 
-    return ctx.send({ exists: false, message: 'البريد الإلكتروني غير مسجل.' });
+    return ctx.send({ exists: false, message: "البريد الإلكتروني غير مسجل." });
   },
-   // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
-    // دالة التحقق من البريد الإلكتروني وكلمة المرور
-    async checkCredentials(ctx) {
-      const { email, password } = ctx.request.body;
+  // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
+  // دالة التحقق من البريد الإلكتروني وكلمة المرور
+  async checkCredentials(ctx) {
+    const { email, password } = ctx.request.body;
 
-  console.log(password);
+    console.log(password);
 
-    
-    
-      // التحقق من وجود البريد الإلكتروني وكلمة المرور
-    
-      if (!email || !password) {
-        return ctx.badRequest('Email and password are required.');
-      }
-    
-      // التحقق من وجود المستخدم بالبريد الإلكتروني
-      const user = await strapi.db.query('api::start.start').findOne({
-        where: { email: email }
+    // التحقق من وجود البريد الإلكتروني وكلمة المرور
+
+    if (!email || !password) {
+      return ctx.badRequest("Email and password are required.");
+    }
+
+    // التحقق من وجود المستخدم بالبريد الإلكتروني
+    const user = await strapi.db.query("api::start.start").findOne({
+      where: { email: email },
+    });
+
+    // طباعة بيانات المستخدم المسترجعة من قاعدة البيانات
+    console.log("User fetched from database:", user);
+
+    if (!user) {
+      return ctx.send({
+        success: false,
+        message: "البريد الإلكتروني غير موجود.",
       });
+    }
 
-        // طباعة بيانات المستخدم المسترجعة من قاعدة البيانات
-  console.log('User fetched from database:', user);
+    // التحقق من مطابقة كلمة المرور باستخدام bcrypt
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    console.log("Is password valid:", isValidPassword);
 
-    
-      if (!user) {
-        return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
-      }
-    
-      // التحقق من مطابقة كلمة المرور باستخدام bcrypt
-      const isValidPassword = await bcrypt.compare(password, user.password);
-    
-      if (!isValidPassword) {
-        return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
-      }
-    
-      // إزالة كلمة المرور من الاستجابة لزيادة الأمان
-      delete user.password;
-    
-      return ctx.send({ success: true, message: 'تسجيل الدخول ناجح.', user });
-    },
-    
+    if (!isValidPassword) {
+      return ctx.send({ success: false, message: "كلمة المرور غير صحيحة." });
+    }
+
+    // إزالة كلمة المرور من الاستجابة لزيادة الأمان
+    delete user.password;
+
+    return ctx.send({ success: true, message: "تسجيل الدخول ناجح.", user });
+  },
 
   // وظيفة لجلب البيانات (find)
   async find(ctx) {
-    const entities = await strapi.entityService.findMany('api::start.start', {
+    const entities = await strapi.entityService.findMany("api::start.start", {
       ...ctx.query,
     });
 
@@ -82,13 +83,13 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
 
   // وظيفة لإنشاء بيانات جديدة (create)
   async create(ctx) {
-    const { data } = ctx.request.body;  // الوصول إلى البيانات المرسلة في الطلب
+    const { data } = ctx.request.body; // الوصول إلى البيانات المرسلة في الطلب
 
     if (!data) {
-      return ctx.badRequest('Data is required.');
+      return ctx.badRequest("Data is required.");
     }
 
-    const entity = await strapi.entityService.create('api::start.start', {
+    const entity = await strapi.entityService.create("api::start.start", {
       data: data,
     });
 
@@ -98,12 +99,12 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
   // وظيفة لتحديث البيانات (update)
   async update(ctx) {
     const { id } = ctx.params;
-    const { data } = ctx.request.body;  // الوصول إلى البيانات المرسلة في الطلب
-    
-    console.log(data)
+    const { data } = ctx.request.body; // الوصول إلى البيانات المرسلة في الطلب
+
+    console.log(data);
 
     if (!data) {
-      return ctx.badRequest('Data is required.');
+      return ctx.badRequest("Data is required.");
     }
 
     // التحقق مما إذا كانت كلمة المرور موجودة في البيانات المرسلة
@@ -113,9 +114,13 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
       data.password = hashedPassword;
     }
 
-    const updatedEntity = await strapi.entityService.update('api::start.start', id, {
-      data: data,
-    });
+    const updatedEntity = await strapi.entityService.update(
+      "api::start.start",
+      id,
+      {
+        data: data,
+      }
+    );
 
     // إزالة كلمة المرور من الاستجابة لزيادة الأمان
     if (updatedEntity.password) {
@@ -124,5 +129,4 @@ module.exports = createCoreController('api::start.start', ({ strapi }) => ({
 
     return ctx.send({ data: updatedEntity });
   },
-
 }));
