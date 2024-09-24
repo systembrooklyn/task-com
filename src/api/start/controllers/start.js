@@ -34,43 +34,29 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   // دالة التحقق من البريد الإلكتروني وكلمة المرور
   async checkCredentials(ctx) {
     const { email, password } = ctx.request.body;
-
-    console.log(password);
-
-    // التحقق من وجود البريد الإلكتروني وكلمة المرور
-
+  
     if (!email || !password) {
-      return ctx.badRequest("Email and password are required.");
+      return ctx.badRequest('Email and password are required.');
     }
-
-    // التحقق من وجود المستخدم بالبريد الإلكتروني
-    const user = await strapi.db.query("api::start.start").findOne({
+  
+    const user = await strapi.db.query('api::start.start').findOne({
       where: { email: email },
     });
-
-    // طباعة بيانات المستخدم المسترجعة من قاعدة البيانات
-    console.log("User fetched from database:", user);
-
+  
     if (!user) {
-      return ctx.send({
-        success: false,
-        message: "البريد الإلكتروني غير موجود.",
-      });
+      return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
     }
-
-    // التحقق من مطابقة كلمة المرور باستخدام bcrypt
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    console.log("Is password valid:", isValidPassword);
-
-    if (!isValidPassword) {
-      return ctx.send({ success: false, message: "كلمة المرور غير صحيحة." });
+  
+    // مقارنة كلمة المرور مباشرة (غير موصى به)
+    if (password !== user.password) {
+      return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
     }
-
-    // إزالة كلمة المرور من الاستجابة لزيادة الأمان
+  
     delete user.password;
-
-    return ctx.send({ success: true, message: "تسجيل الدخول ناجح.", user });
+  
+    return ctx.send({ success: true, message: 'تسجيل الدخول ناجح.', user });
   },
+  
 
   // وظيفة لجلب البيانات (find)
   async find(ctx) {
@@ -105,13 +91,6 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
     if (!data) {
       return ctx.badRequest("Data is required.");
-    }
-
-    // التحقق مما إذا كانت كلمة المرور موجودة في البيانات المرسلة
-    if (data.password) {
-      // تشفير كلمة المرور قبل التحديث
-      const hashedPassword = await bcrypt.hash(data.password, 10); // الرقم 10 هو عدد الجولات (salt rounds)
-      data.password = hashedPassword;
     }
 
     const updatedEntity = await strapi.entityService.update(
