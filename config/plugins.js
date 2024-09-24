@@ -2,22 +2,18 @@ module.exports = ({ env }) => ({
     email: {
       provider: 'nodemailer',
       providerOptions: {
-        service: 'gmail', // أو 'yahoo' أو 'outlook'، حسب خدمة البريد التي تستخدمها
+        host: 'smtp.gmail.com',  // خادم Gmail
+        port: 465,               // منفذ SSL الخاص بـ Gmail
         auth: {
-          user: env('SMTP_USER'),
-          pass: env('SMTP_PASSWORD'),
+          user: env('SMTP_USERNAME', 'system.bbs.2024@gmail.com'), // البريد الإلكتروني
+          pass: env('SMTP_PASSWORD', 'tvvieicmvmrmxsxr'),           // كلمة المرور
         },
-        // اختياري: إعدادات الاتصال
-        secure: true, // إذا كنت تستخدم SSL/TLS
-        tls: {
-          rejectUnauthorized: false, // يمكنك تغييره بناءً على المتطلبات الأمنية
-        },
+        secure: true, // استخدم true لـ SSL (المنفذ 465)
       },
       settings: {
-        defaultFrom: env('SMTP_USER'),
-        defaultReplyTo: env('SMTP_PASSWORD'),
+        defaultFrom: 'system.bbs.2024@gmail.com', // البريد الذي سيتم الإرسال منه
+        defaultReplyTo: 'system.bbs.2024@gmail.com',
       },
-      
     },
   });
   
