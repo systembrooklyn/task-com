@@ -18,9 +18,6 @@
     "companyname": {
       "type": "string"
     },
-    "password": {
-      "type": "password"
-    },
     "logo": {
       "type": "media",
       "multiple": true,
@@ -33,6 +30,9 @@
       "type": "string"
     },
     "industry": {
+      "type": "string"
+    },
+    "password": {
       "type": "string"
     }
   }
