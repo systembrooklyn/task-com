@@ -112,7 +112,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   async sendResetPassword(ctx) {
     const { email } = ctx.request.body;
 
-    console.log(email);
+    console.log("email : " + email);
 
     // التحقق من وجود البريد الإلكتروني
     if (!email) {
@@ -121,7 +121,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
     // البحث عن المستخدم بالبريد الإلكتروني
     const user = await strapi.db.query('api::start.start').findOne({
-      where: { email },
+      where: { email:email },
     });
 
     if (!user) {
