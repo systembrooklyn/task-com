@@ -127,7 +127,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
     }
 
     // إنشاء رابط إعادة تعيين كلمة المرور
-    const resetPasswordLink = `https://task-com.onrender.com/send-reset-password?email=${email}`;
+    const resetPasswordLink = `https://task-com.onrender.com/reset-password?email=${email}`;
 
     // إرسال البريد الإلكتروني مع الرابط
     try {
