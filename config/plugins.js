@@ -17,6 +17,7 @@ module.exports = ({ env }) => ({
         defaultFrom: env('SMTP_USER'),
         defaultReplyTo: env('SMTP_PASSWORD'),
       },
+      
     },
   });
   
