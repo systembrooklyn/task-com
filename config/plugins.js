@@ -3,7 +3,7 @@ module.exports = ({ env }) => ({
     provider: 'smtp',
     providerOptions: {
       host: env('SMTP_HOST', 'mail.brooklynacademy.net'), // خادم SMTP الخاص بنطاقك
-      port: env('SMTP_PORT', 465), // المنفذ 465 لـ SSL
+      port: env('SMTP_PORT', 587), // المنفذ 465 لـ SSL
       secure: true, // استخدام SSL
       auth: {
         user: env('SMTP_USERNAME', 'mytask@brooklynacademy.net'), // بريدك الإلكتروني
