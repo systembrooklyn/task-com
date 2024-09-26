@@ -1,10 +1,10 @@
 module.exports = ({ env }) => ({
   email: {
-    provider: 'smtp',
+    provider: 'nodemailer',
     providerOptions: {
       host: env('SMTP_HOST', 'mail.brooklynacademy.net'), // خادم SMTP الخاص بنطاقك
-      port: env('SMTP_PORT', 587), // المنفذ 465 لـ SSL
-      secure: true, // استخدام SSL
+      port: env('SMTP_PORT', 587), // استخدم 587 لـ TLS أو 465 لـ SSL
+      secure: env('SMTP_SECURE', false), // false لـ TLS و true لـ SSL
       auth: {
         user: env('SMTP_USERNAME', 'mytask@brooklynacademy.net'), // بريدك الإلكتروني
         pass: env('SMTP_PASSWORD', 'U6}RqMX[,4gF'), // كلمة المرور الخاصة ببريدك الإلكتروني
