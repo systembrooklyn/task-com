@@ -108,7 +108,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       delete updatedEntity.password;
     }
 
-    return ctx.send({ data: updatedEntity });
+    return ctx.send({success: true, message: 'تم التحديث بنجاح', data: updatedEntity });
   },
 
   async sendResetPassword(ctx) {
