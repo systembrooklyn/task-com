@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "forget_pass_emails",
+  "info": {
+    "singularName": "forget-pass-email",
+    "pluralName": "forget-pass-emails",
+    "displayName": "forget-pass-email"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email"
+    }
+  }
+}

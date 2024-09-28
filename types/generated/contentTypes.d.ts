@@ -362,6 +362,37 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiForgetPassEmailForgetPassEmail
+  extends Schema.CollectionType {
+  collectionName: 'forget_pass_emails';
+  info: {
+    singularName: 'forget-pass-email';
+    pluralName: 'forget-pass-emails';
+    displayName: 'forget-pass-email';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    email: Attribute.Email;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::forget-pass-email.forget-pass-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::forget-pass-email.forget-pass-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiStartStart extends Schema.CollectionType {
   collectionName: 'starts';
   info: {
@@ -836,6 +867,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
       'api::start.start': ApiStartStart;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
