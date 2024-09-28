@@ -4,6 +4,7 @@
  * start controller
  */
 const bcrypt = require("bcrypt");
+const { ids } = require("googleapis/build/src/apis/ids");
 
 const { createCoreController } = require("@strapi/strapi").factories;
 
@@ -25,6 +26,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       return ctx.send({
         exists: true,
         message: "البريد الإلكتروني مسجل بالفعل.",
+        ids: existingEmail.id,
       });
     }
 
