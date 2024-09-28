@@ -368,7 +368,7 @@ export interface ApiForgetPassEmailForgetPassEmail
   info: {
     singularName: 'forget-pass-email';
     pluralName: 'forget-pass-emails';
-    displayName: 'forget-pass-email';
+    displayName: 'forgetPassEmail';
     description: '';
   };
   options: {
