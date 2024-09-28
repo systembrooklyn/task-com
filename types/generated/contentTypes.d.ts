@@ -369,15 +369,15 @@ export interface ApiForgetPassEmailForgetPassEmail
     singularName: 'forget-pass-email';
     pluralName: 'forget-pass-emails';
     displayName: 'forget-pass-email';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     email: Attribute.Email;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::forget-pass-email.forget-pass-email',
       'oneToOne',
