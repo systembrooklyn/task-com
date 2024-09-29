@@ -5,10 +5,19 @@
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
+const crypto = require('crypto');
 
-// تعريف دالة التشفير هنا
-const encodeEmail = (email) => {
-  return Buffer.from(email).toString('base64');
+// إعدادات التشفير
+const secretKey = 'vZ0D8X$yE6Ng^9P3r@H#w1RLvC$Sx^5M'; // استخدم مفتاح سري قوي ويُفضل وضعه في ملف .env
+const algorithm = 'aes-256-cbc';
+
+// دالة لتشفير البريد الإلكتروني
+const encryptEmail = (email) => {
+  const iv = crypto.randomBytes(16); // إنشاء IV عشوائي
+  const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey, 'hex'), iv);
+  let encrypted = cipher.update(email);
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return `${iv.toString('hex')}:${encrypted.toString('hex')}`;
 };
 
 module.exports = createCoreController("api::forget-pass-email.forget-pass-email", ({ strapi }) => ({
@@ -21,11 +30,10 @@ module.exports = createCoreController("api::forget-pass-email.forget-pass-email"
     }
 
     // تشفير البريد الإلكتروني
-    const encodedEmail = encodeEmail(data.email);
-    console.log(encodedEmail);
+    const encryptedEmail = encryptEmail(data.email);
 
     // استخدام البريد الإلكتروني المشفر للتخزين أو الإرسال
-    data.email = encodedEmail;
+    data.email = encryptedEmail;
 
     const entity = await strapi.entityService.create("api::forget-pass-email.forget-pass-email", {
       data: data,
