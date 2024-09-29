@@ -49,7 +49,6 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       return ctx.send({
         exists: true,
         message: " البريد الإلكتروني مسجل بالفعل.",
-        ids: existingEmail.id,
       });
     }
 
