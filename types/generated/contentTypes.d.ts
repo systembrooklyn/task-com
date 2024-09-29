@@ -376,6 +376,7 @@ export interface ApiForgetPassEmailForgetPassEmail
   };
   attributes: {
     email: Attribute.Email;
+    email_id: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
