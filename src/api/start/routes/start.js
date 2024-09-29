@@ -27,6 +27,14 @@ module.exports = {
         },
       },
       {
+        method: 'GET',
+        path: '/starts/check-id',  
+        handler: 'start.checkId',
+        config: {
+          auth: false,  
+        },
+      },
+      {
         method: 'POST',
         path: '/starts/send-reset-password',
         handler: 'start.sendResetPassword',

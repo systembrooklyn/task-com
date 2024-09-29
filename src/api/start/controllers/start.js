@@ -32,6 +32,29 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
     return ctx.send({ exists: false, message: "البريد الإلكتروني غير مسجل." });
   },
+
+  async checkId(ctx) {
+    const { id } = ctx.query;
+
+    if (!id) {
+      return ctx.badRequest("Id parameter is required.");
+    }
+
+    // التحقق مما إذا كان البريد الإلكتروني موجودًا
+    const existingEmail = await strapi.db.query("api::start.start").findOne({
+      where: { id: id },
+    });
+
+    if (existingEmail) {
+      return ctx.send({
+        exists: true,
+        message: " البريد الإلكتروني مسجل بالفعل.",
+        ids: existingEmail.id,
+      });
+    }
+
+    return ctx.send({ exists: false, message: "البريد الإلكتروني غير مسجل." });
+  },
   // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
   // دالة التحقق من البريد الإلكتروني وكلمة المرور
   async checkCredentials(ctx) {
