@@ -32,6 +32,8 @@ module.exports = createCoreController("api::forget-pass-email.forget-pass-email"
     // تشفير البريد الإلكتروني
     const encryptedEmail = encryptEmail(data.email);
 
+    console.log(encryptedEmail);
+
     // استخدام البريد الإلكتروني المشفر للتخزين أو الإرسال
     data.email = encryptedEmail;
 
