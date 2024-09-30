@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "invitation_emails",
+  "info": {
+    "singularName": "invitation-email",
+    "pluralName": "invitation-emails",
+    "displayName": "invitationEmail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "email_id": {
+      "type": "integer"
+    }
+  }
+}

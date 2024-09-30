@@ -394,6 +394,39 @@ export interface ApiForgetPassEmailForgetPassEmail
   };
 }
 
+export interface ApiInvitationEmailInvitationEmail
+  extends Schema.CollectionType {
+  collectionName: 'invitation_emails';
+  info: {
+    singularName: 'invitation-email';
+    pluralName: 'invitation-emails';
+    displayName: 'invitationEmail';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    email: Attribute.Email;
+    email_id: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::invitation-email.invitation-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::invitation-email.invitation-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiStartStart extends Schema.CollectionType {
   collectionName: 'starts';
   info: {
@@ -871,6 +904,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
+      'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
       'api::start.start': ApiStartStart;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
