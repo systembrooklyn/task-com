@@ -447,6 +447,7 @@ export interface ApiStartStart extends Schema.CollectionType {
     password: Attribute.String;
     companyId: Attribute.BigInteger;
     role: Attribute.String;
+    name: Attribute.String & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

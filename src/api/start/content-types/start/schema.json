@@ -40,6 +40,10 @@
     },
     "role": {
       "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true
     }
   }
 }
