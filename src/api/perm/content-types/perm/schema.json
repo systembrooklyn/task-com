@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "perms",
+  "info": {
+    "singularName": "perm",
+    "pluralName": "perms",
+    "displayName": "perm",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "rols": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::rol.rol",
+      "mappedBy": "permissions"
+    },
+    "canAddUser": {
+      "type": "boolean"
+    }
+  }
+}

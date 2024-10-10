@@ -38,12 +38,15 @@
     "companyId": {
       "type": "biginteger"
     },
-    "role": {
-      "type": "string"
-    },
     "name": {
       "type": "string",
       "required": false
+    },
+    "role": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::rol.rol",
+      "inversedBy": "users"
     }
   }
 }

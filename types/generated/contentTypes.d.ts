@@ -362,109 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiForgetPassEmailForgetPassEmail
-  extends Schema.CollectionType {
-  collectionName: 'forget_pass_emails';
-  info: {
-    singularName: 'forget-pass-email';
-    pluralName: 'forget-pass-emails';
-    displayName: 'forgetPassEmail';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    email: Attribute.Email;
-    email_id: Attribute.Integer;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::forget-pass-email.forget-pass-email',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::forget-pass-email.forget-pass-email',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiInvitationEmailInvitationEmail
-  extends Schema.CollectionType {
-  collectionName: 'invitation_emails';
-  info: {
-    singularName: 'invitation-email';
-    pluralName: 'invitation-emails';
-    displayName: 'invitationEmail';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    email: Attribute.Email;
-    email_id: Attribute.Integer;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::invitation-email.invitation-email',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::invitation-email.invitation-email',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiStartStart extends Schema.CollectionType {
-  collectionName: 'starts';
-  info: {
-    singularName: 'start';
-    pluralName: 'starts';
-    displayName: 'start';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    email: Attribute.Email;
-    companyname: Attribute.String;
-    logo: Attribute.Media<'images', true>;
-    companySize: Attribute.String;
-    industry: Attribute.String;
-    password: Attribute.String;
-    companyId: Attribute.BigInteger;
-    role: Attribute.String;
-    name: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::start.start',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::start.start',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -894,6 +791,160 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiForgetPassEmailForgetPassEmail
+  extends Schema.CollectionType {
+  collectionName: 'forget_pass_emails';
+  info: {
+    singularName: 'forget-pass-email';
+    pluralName: 'forget-pass-emails';
+    displayName: 'forgetPassEmail';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    email: Attribute.Email;
+    email_id: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::forget-pass-email.forget-pass-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::forget-pass-email.forget-pass-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiInvitationEmailInvitationEmail
+  extends Schema.CollectionType {
+  collectionName: 'invitation_emails';
+  info: {
+    singularName: 'invitation-email';
+    pluralName: 'invitation-emails';
+    displayName: 'invitationEmail';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    email: Attribute.Email;
+    email_id: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::invitation-email.invitation-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::invitation-email.invitation-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPermPerm extends Schema.CollectionType {
+  collectionName: 'perms';
+  info: {
+    singularName: 'perm';
+    pluralName: 'perms';
+    displayName: 'perm';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    rols: Attribute.Relation<'api::perm.perm', 'manyToMany', 'api::rol.rol'>;
+    canAddUser: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::perm.perm', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::perm.perm', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRolRol extends Schema.CollectionType {
+  collectionName: 'rols';
+  info: {
+    singularName: 'rol';
+    pluralName: 'rols';
+    displayName: 'rol';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    permissions: Attribute.Relation<
+      'api::rol.rol',
+      'manyToMany',
+      'api::perm.perm'
+    >;
+    users: Attribute.Relation<'api::rol.rol', 'oneToMany', 'api::start.start'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::rol.rol', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::rol.rol', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStartStart extends Schema.CollectionType {
+  collectionName: 'starts';
+  info: {
+    singularName: 'start';
+    pluralName: 'starts';
+    displayName: 'start';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    email: Attribute.Email;
+    companyname: Attribute.String;
+    logo: Attribute.Media<'images', true>;
+    companySize: Attribute.String;
+    industry: Attribute.String;
+    password: Attribute.String;
+    companyId: Attribute.BigInteger;
+    name: Attribute.String;
+    role: Attribute.Relation<'api::start.start', 'manyToOne', 'api::rol.rol'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::start.start',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::start.start',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -904,9 +955,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
-      'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
-      'api::start.start': ApiStartStart;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -915,6 +963,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
+      'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
+      'api::perm.perm': ApiPermPerm;
+      'api::rol.rol': ApiRolRol;
+      'api::start.start': ApiStartStart;
     }
   }
 }

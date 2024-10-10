@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rols",
+  "info": {
+    "singularName": "rol",
+    "pluralName": "rols",
+    "displayName": "rol",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::perm.perm",
+      "inversedBy": "rols"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::start.start",
+      "mappedBy": "role"
+    }
+  }
+}
