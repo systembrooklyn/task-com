@@ -81,18 +81,30 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
   // وظيفة لإنشاء بيانات جديدة (create)
   async create(ctx) {
-    const { data } = ctx.request.body; // الوصول إلى البيانات المرسلة في الطلب
-    console.log(data);
-    if (!data) {
-      return ctx.badRequest("Data is required.");
+    try {
+      const { name, email, password, roleId } = ctx.request.body;
+
+      if (!name || !email || !password || !roleId) {
+        return ctx.throw(400, 'Name, Email, Password, and Role ID are required');
+      }
+
+      // إنشاء سجل جديد في جدول start مع الربط بالـ role باستخدام العلاقة many-to-many
+      const newStart = await strapi.entityService.create('api::start.start', {
+        data: {
+          name,
+          email,
+          password,
+          role: [roleId], // العلاقة مع جدول roles، باستخدام الـ roleId المرسل
+        },
+      });
+
+      return ctx.send({ data: newStart });
+    } catch (error) {
+      console.error('Error creating start:', error);
+      ctx.throw(500, 'An error occurred while creating the start');
     }
-
-    const entity = await strapi.entityService.create("api::start.start", {
-      data: data,
-    });
-
-    return ctx.send({ data: entity });
   },
+
   // وظيفة لتحديث البيانات (update)
   async update(ctx) {
     const { id } = ctx.params;
