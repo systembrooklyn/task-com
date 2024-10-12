@@ -53,6 +53,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
     const user = await strapi.db.query('api::start.start').findOne({
       where: { email: email },
+      populate: ['role', 'role.permissions'],
     });
 
     if (!user) {
