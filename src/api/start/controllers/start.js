@@ -82,7 +82,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   // وظيفة لإنشاء بيانات جديدة (create)
   async create(ctx) {
     try {
-      const { name, email, password, roleId } = ctx.request.body;
+      const { name, email, password, companyId , roleId } = ctx.request.body;
 
       if (!name || !email || !password || !roleId) {
         return ctx.throw(400, 'Name, Email, Password, and Role ID are required');
@@ -101,6 +101,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
           name,
           email,
           password,
+          companyId,
           role: [roleId], // العلاقة مع جدول roles، باستخدام الـ roleId المرسل
           permissions: permissionIds,
         },
