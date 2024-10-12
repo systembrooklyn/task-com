@@ -87,6 +87,13 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       if (!name || !email || !password || !roleId) {
         return ctx.throw(400, 'Name, Email, Password, and Role ID are required');
       }
+            // جلب الصلاحيات المرتبطة بـ roleId
+            const role = await strapi.entityService.findOne('api::rol.rol', roleId, {
+              populate: ['permissions'], // جلب الصلاحيات المرتبطة بالـ role
+            });
+
+            const permissionIds = role.permissions.map((perm) => perm.id);
+
 
       // إنشاء سجل جديد في جدول start مع الربط بالـ role باستخدام العلاقة many-to-many
       const newStart = await strapi.entityService.create('api::start.start', {
@@ -95,6 +102,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
           email,
           password,
           role: [roleId], // العلاقة مع جدول roles، باستخدام الـ roleId المرسل
+          permissions: permissionIds,
         },
       });
 
