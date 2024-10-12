@@ -92,7 +92,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
               populate: ['permissions'], // جلب الصلاحيات المرتبطة بالـ role
             });
 
-            const permissionIds = role.permissions;
+            const permissionIds = role.permissions.map((perm) => perm.id);
 
             console.log("perm: " + permissionIds)
 
