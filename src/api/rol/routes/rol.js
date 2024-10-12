@@ -6,4 +6,11 @@
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::rol.rol');
+module.exports = createCoreRouter('api::rol.rol', {
+  config: {
+    find: {
+      policies: [],
+      middlewares: [],
+    },
+  },
+});
