@@ -94,7 +94,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
             const permissionIds = role.permissions.map((perm) => perm.id);
 
-            console.log(permissionIds)
+            console.log("perm: " + permissionIds)
 
 
       // إنشاء سجل جديد في جدول start مع الربط بالـ role باستخدام العلاقة many-to-many
