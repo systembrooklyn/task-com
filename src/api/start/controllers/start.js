@@ -75,6 +75,11 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   async find(ctx) {
     const entities = await strapi.entityService.findMany("api::start.start", {
       ...ctx.query,
+      populate: {
+        role: {
+          populate: ["permissions"],
+        },
+      },
     });
 
     return ctx.send({ data: entities });
