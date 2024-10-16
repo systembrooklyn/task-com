@@ -40,7 +40,7 @@ module.exports = createCoreController('api::rol.rol', ({ strapi }) => ({
         data: {
           name,
           companyId, // يمكن أن يكون null إذا لم يكن companyId موجودًا
-          permissions, // إرسال الصلاحيات كما هي
+          ...permissions, // إرسال الصلاحيات كما هي
         },
       });
 
