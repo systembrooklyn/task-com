@@ -40,6 +40,8 @@ module.exports = createCoreController('api::rol.rol', ({ strapi }) => ({
         acc[permission.permissionName] = permission.value;
         return acc;
       }, {});
+
+      console.log("Permissions object:", permissionsObject);
   
       // إنشاء الدور الجديد باستخدام entityService
       const createdRole = await strapi.entityService.create('api::rol.rol', {
@@ -49,6 +51,8 @@ module.exports = createCoreController('api::rol.rol', ({ strapi }) => ({
           permissions: permissionsObject, // إرسال الصلاحيات ككائن
         },
       });
+
+      console.log("Created role with permissions:", createdRole);
   
       // إعادة الرد بنجاح مع البيانات التي تم إنشاؤها
       return { data: createdRole };
