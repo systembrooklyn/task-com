@@ -11,7 +11,6 @@ module.exports = createCoreController('api::rol.rol', ({ strapi }) => ({
     try {
       // جلب جميع الأدوار باستخدام entityService
       const roles = await strapi.entityService.findMany('api::rol.rol', {
-        fields: ['id', 'name'], // تحديد الحقول التي تريد استرجاعها
         populate: {
           permissions: {
             populate: ['permissions'],
