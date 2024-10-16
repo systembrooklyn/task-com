@@ -26,6 +26,9 @@
       "relation": "oneToMany",
       "target": "api::start.start",
       "mappedBy": "role"
+    },
+    "companyId": {
+      "type": "integer"
     }
   }
 }

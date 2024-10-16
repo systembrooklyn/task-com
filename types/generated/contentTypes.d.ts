@@ -898,6 +898,7 @@ export interface ApiRolRol extends Schema.CollectionType {
       'api::perm.perm'
     >;
     users: Attribute.Relation<'api::rol.rol', 'oneToMany', 'api::start.start'>;
+    companyId: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::rol.rol', 'oneToOne', 'admin::user'> &
