@@ -12,5 +12,17 @@ module.exports = createCoreRouter('api::rol.rol', {
       policies: [],
       middlewares: [],
     },
+    create: {
+      policies: [],
+      middlewares: [],
+    },
+    update: {
+      policies: [],
+      middlewares: [],
+    },
+    delete: {
+      policies: [],
+      middlewares: [],
+    },
   },
 });
