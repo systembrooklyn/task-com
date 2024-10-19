@@ -14,21 +14,19 @@ module.exports = createCoreController('api::rol.rol', ({ strapi }) => ({
     try {
       const { name, companyId, permissions } = ctx.request.body.data;
 
-      // التحقق من أن الحقول المطلوبة موجودة
-      if (!name || !permissions || permissions.length === 0) {
+      if (!name || !permissions) {
         return ctx.badRequest('Role name and permissions are required.');
       }
 
-      // إنشاء الدور الجديد باستخدام entityService
+      // إنشاء الدور الجديد مع الصلاحيات ككائن داخل permissions
       const createdRole = await strapi.entityService.create('api::rol.rol', {
         data: {
           name,
-          companyId, // يمكن أن يكون null إذا لم يكن companyId موجودًا
-          permissions: permissions.map(permissionId => ({ id: permissionId })), // ربط الصلاحيات بالدور
+          companyId,
+          permissions, // تمرير كائن permissions إلى الكيان
         },
       });
 
-      // إعادة الرد بنجاح مع البيانات التي تم إنشاؤها
       return { data: createdRole };
     } catch (error) {
       console.error("Error creating role with permissions:", error);
