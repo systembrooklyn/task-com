@@ -13,27 +13,27 @@ module.exports = createCoreController('api::rol.rol', ({ strapi }) => ({
   async create(ctx) {
     try {
       const { name, companyId, permissions } = ctx.request.body.data;
-  
+
       if (!name || !permissions) {
         return ctx.badRequest('Role name and permissions are required.');
       }
-  
-      // تأكد من أن الصلاحيات ترسل ككائن وليس كعلاقات
+
+      // إنشاء الدور الجديد مع الصلاحيات ككائن داخل permissions
       const createdRole = await strapi.entityService.create('api::rol.rol', {
         data: {
           name,
           companyId,
-          permissions: permissions, // تمرير الصلاحيات ككائن
+          permissions, // تمرير كائن permissions إلى الكيان
         },
       });
-  
+
       return { data: createdRole };
     } catch (error) {
       console.error("Error creating role with permissions:", error);
       ctx.throw(500, 'An error occurred while creating the role');
     }
   },
-  
+
 
 
   async find(ctx) {
