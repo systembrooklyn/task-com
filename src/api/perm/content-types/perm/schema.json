@@ -20,6 +20,12 @@
     },
     "canAddUser": {
       "type": "boolean"
+    },
+    "canEditUser": {
+      "type": "boolean"
+    },
+    "canDeleteUser": {
+      "type": "boolean"
     }
   }
 }
