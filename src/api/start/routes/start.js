@@ -65,6 +65,14 @@ module.exports = {
         "config": {
           "policies": []
         }
+      },
+      {
+        "method": "DELETE",
+        "path": "/starts/:id",
+        "handler": "start.delete",
+        "config": {
+          "policies": []
+        }
       }
     ],
   };

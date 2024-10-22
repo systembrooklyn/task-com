@@ -175,4 +175,18 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       return ctx.send({ success: false, message: 'Error sending reset link.' });
     }
   },
+  
+  async deleteUser(ctx) {
+    const { id } = ctx.params;
+    const user = await strapi.db.query('api::start.start').findOne({
+      where: { id: id },
+    });
+    if (!user) {
+      return ctx.send({ success: false, message: 'User not found.' });
+    }
+    await strapi.db.query('api::start.start').delete({
+      where: { id: id },
+    });
+    return ctx.send({ success: true, message: 'User deleted successfully.' });
+  }
 }));
