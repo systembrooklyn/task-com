@@ -90,9 +90,9 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
     try {
       const { name, email, password, companyId , roleId } = ctx.request.body;
 
-      if (!name || !email || !password || !roleId) {
-        return ctx.throw(400, 'Name, Email, Password, and Role ID are required');
-      }
+      // if (!name || !email || !password || !roleId) {
+      //   return ctx.throw(400, 'Name, Email, Password, and Role ID are required');
+      // }
             // جلب الصلاحيات المرتبطة بـ roleId
             const role = await strapi.entityService.findOne('api::rol.rol', roleId, {
               populate: ['permissions'], // جلب الصلاحيات المرتبطة بالـ role
