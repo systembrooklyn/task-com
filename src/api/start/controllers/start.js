@@ -111,11 +111,11 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
           password,
           companyId,
           role: [roleId], // العلاقة مع جدول roles، باستخدام الـ roleId المرسل
-          // permissions: permissionIds,
+          // permissions: permissionIds,ش
         },
       });
 
-      return ctx.send({ data: newStart });
+      return ctx.send({ success: true, message: "User created successfully", userId: newStart.id  , data : newStart });
     } catch (error) {
       console.error('Error creating start:', error);
       ctx.throw(500, 'An error occurred while creating the start');
