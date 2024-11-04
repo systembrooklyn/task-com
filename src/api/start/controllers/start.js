@@ -45,29 +45,36 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
   // وظيفة للتحقق من البريد الإلكتروني وكلمة المرور
   // دالة التحقق من البريد الإلكتروني وكلمة المرور
   async checkCredentials(ctx) {
+    // التحقق من نوع الطلب
+    if (ctx.request.method !== "POST") {
+      return ctx.badRequest("This endpoint only accepts POST requests.");
+    }
     const { email, password } = ctx.request.body;
 
     if (!email || !password) {
-      return ctx.badRequest('Email and password are required.');
+      return ctx.badRequest("Email and password are required.");
     }
 
-    const user = await strapi.db.query('api::start.start').findOne({
+    const user = await strapi.db.query("api::start.start").findOne({
       where: { email: email },
-      populate: ['role', 'role.permissions'],
+      populate: ["role", "role.permissions"],
     });
 
     if (!user) {
-      return ctx.send({ success: false, message: 'البريد الإلكتروني غير موجود.' });
+      return ctx.send({
+        success: false,
+        message: "البريد الإلكتروني غير موجود.",
+      });
     }
 
     // مقارنة كلمة المرور مباشرة (غير موصى به)
     if (password !== user.password) {
-      return ctx.send({ success: false, message: 'كلمة المرور غير صحيحة.' });
+      return ctx.send({ success: false, message: "كلمة المرور غير صحيحة." });
     }
 
     delete user.password;
 
-    return ctx.send({ success: true, message: 'تسجيل الدخول ناجح.', user });
+    return ctx.send({ success: true, message: "تسجيل الدخول ناجح.", user });
   },
 
 
@@ -87,24 +94,30 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
 
   // وظيفة لإنشاء بيانات جديدة (create)
   async create(ctx) {
+
+    if (ctx.request.method !== "POST") {
+      return ctx.badRequest("This endpoint only accepts POST requests.");
+    }
     try {
-      const { name, email, password, companyId , roleId } = ctx.request.body;
+      const { name, email, password, companyId, roleId } = ctx.request.body;
+
+      // التحقق من نوع الطلب
+
 
       // if (!name || !email || !password || !roleId) {
       //   return ctx.throw(400, 'Name, Email, Password, and Role ID are required');
       // }
-            // جلب الصلاحيات المرتبطة بـ roleId
-            const role = await strapi.entityService.findOne('api::rol.rol', roleId, {
-              populate: ['permissions'], // جلب الصلاحيات المرتبطة بالـ role
-            });
+      // جلب الصلاحيات المرتبطة بـ roleId
+      const role = await strapi.entityService.findOne("api::rol.rol", roleId, {
+        populate: ["permissions"], // جلب الصلاحيات المرتبطة بالـ role
+      });
 
-            const permissionIds = role.permissions.map((perm) => perm.id);
+      const permissionIds = role.permissions.map((perm) => perm.id);
 
-            console.log("perm: " + permissionIds)
-
+      console.log("perm: " + permissionIds);
 
       // إنشاء سجل جديد في جدول start مع الربط بالـ role باستخدام العلاقة many-to-many
-      const newStart = await strapi.entityService.create('api::start.start', {
+      const newStart = await strapi.entityService.create("api::start.start", {
         data: {
           name,
           email,
@@ -115,7 +128,12 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
         },
       });
 
-      return ctx.send({ success: true, message: "User created successfully", userId: newStart.id  , data : newStart });
+      return ctx.send({
+        success: true,
+        message: "User created successfully",
+        userId: newStart.id,
+        data: newStart,
+      });
     } catch (error) {
       console.error('Error creating start:', error);
       ctx.throw(500, 'An error occurred while creating the start');
@@ -175,7 +193,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       return ctx.send({ success: false, message: 'Error sending reset link.' });
     }
   },
-  
+
   async deleteUser(ctx) {
     const { id } = ctx.params;
     const user = await strapi.db.query('api::start.start').findOne({
