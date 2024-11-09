@@ -17,7 +17,7 @@ module.exports = createCoreController("api::department.department", ({ strapi })
   },
   async create(ctx) {
     try {
-      const { departmentName, employeeIds } = ctx.request.body;
+      const { departmentName, employeeIds } = ctx.request.body.data;
 
       if (!departmentName) {
         return ctx.badRequest('Department name is required.');
