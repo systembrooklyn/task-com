@@ -123,7 +123,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
           email,
           password,
           companyId,
-          role: [roleId], // العلاقة مع جدول roles، باستخدام الـ roleId المرسل
+          role: { id: roleId }, // العلاقة مع جدول roles، باستخدام الـ roleId المرسل
           // permissions: permissionIds,ش
         },
       });

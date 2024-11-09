@@ -791,6 +791,57 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiDepartmentDepartment extends Schema.CollectionType {
+  collectionName: 'departments';
+  info: {
+    singularName: 'department';
+    pluralName: 'departments';
+    displayName: 'Department';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    departmentName: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    employees: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::start.start'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::department.department'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiForgetPassEmailForgetPassEmail
   extends Schema.CollectionType {
   collectionName: 'forget_pass_emails';
@@ -931,6 +982,11 @@ export interface ApiStartStart extends Schema.CollectionType {
     companyId: Attribute.BigInteger;
     name: Attribute.String;
     role: Attribute.Relation<'api::start.start', 'manyToOne', 'api::rol.rol'>;
+    department: Attribute.Relation<
+      'api::start.start',
+      'manyToOne',
+      'api::department.department'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -966,6 +1022,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::department.department': ApiDepartmentDepartment;
       'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
       'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
       'api::perm.perm': ApiPermPerm;
