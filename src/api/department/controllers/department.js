@@ -22,7 +22,7 @@ module.exports = createCoreController(
     },
     async create(ctx) {
       try {
-        const { departmentName, employeeIds } = ctx.request.body.data;
+        const { departmentName, employeeIds, companyID } = ctx.request.body.data;
 
         if (!departmentName) {
           return ctx.badRequest("Department name is required.");
