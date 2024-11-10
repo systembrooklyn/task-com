@@ -924,6 +924,9 @@ export interface ApiPermPerm extends Schema.CollectionType {
     canAddUser: Attribute.Boolean;
     canEditUser: Attribute.Boolean;
     canDeleteUser: Attribute.Boolean;
+    canAddDepartment: Attribute.Boolean;
+    canEditDepartment: Attribute.Boolean;
+    canDeleteDepartment: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::perm.perm', 'oneToOne', 'admin::user'> &
