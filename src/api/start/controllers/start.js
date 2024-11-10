@@ -86,6 +86,7 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
         role: {
           populate: ["permissions"],
         },
+        department: ["departmentName"],
       },
     });
 
