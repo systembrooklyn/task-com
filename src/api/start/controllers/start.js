@@ -84,11 +84,11 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
       ...ctx.query,
       populate: {
         role: {
-          populate: ["permissions"],
+          populate: ["permissions"]
         },
-        departments: {
-          populate: ["departmentName"],
-        },
+        department: {
+          populate: "*"
+        }
       },
     });
 
