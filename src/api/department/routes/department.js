@@ -20,5 +20,15 @@ module.exports = {
       path: '/departments',
       handler: 'department.find',
     },
+    {
+      method: 'PUT',
+      path: '/departments/:id',
+      handler: 'department.update',
+    },
+    {
+      method: 'DELETE',
+      path: '/departments/:id',
+      handler: 'department.delete',
+    },
   ],
 };

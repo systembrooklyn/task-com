@@ -36,4 +36,22 @@ module.exports = createCoreController("api::department.department", ({ strapi })
       ctx.throw(500, 'An error occurred while creating the department');
     }
   },
+  async update(ctx) {
+    const { id } = ctx.params;
+    const { departmentName, employeeIds } = ctx.request.body.data;
+
+    const updatedDepartment = await strapi.entityService.update('api::department.department', id, {
+      data: {
+        departmentName,
+        employees: employeeIds,
+      },
+    });
+
+    return { data: updatedDepartment, message: 'Department updated successfully' };
+  },
+  async delete(ctx) {
+    const { id } = ctx.params;
+    await strapi.entityService.delete('api::department.department', id);
+    return { message: 'Department deleted successfully' };
+  }
 }));
