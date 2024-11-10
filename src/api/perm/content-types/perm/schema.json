@@ -26,6 +26,15 @@
     },
     "canDeleteUser": {
       "type": "boolean"
+    },
+    "canAddDepartment": {
+      "type": "boolean"
+    },
+    "canEditDepartment": {
+      "type": "boolean"
+    },
+    "canDeleteDepartment": {
+      "type": "boolean"
     }
   }
 }
