@@ -29,6 +29,9 @@
       "relation": "oneToMany",
       "target": "api::start.start",
       "mappedBy": "department"
+    },
+    "companyID": {
+      "type": "biginteger"
     }
   }
 }
