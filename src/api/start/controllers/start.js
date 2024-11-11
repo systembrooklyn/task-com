@@ -88,7 +88,12 @@ module.exports = createCoreController("api::start.start", ({ strapi }) => ({
         },
         department: {
           populate: "*"
-        }
+        },
+        position: {
+          populate: {
+            fields: ["name"],
+          },
+        },
       },
     });
 

@@ -53,6 +53,12 @@
       "relation": "manyToOne",
       "target": "api::department.department",
       "inversedBy": "employees"
+    },
+    "position": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::position.position",
+      "inversedBy": "employees"
     }
   }
 }

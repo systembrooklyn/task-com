@@ -936,6 +936,41 @@ export interface ApiPermPerm extends Schema.CollectionType {
   };
 }
 
+export interface ApiPositionPosition extends Schema.CollectionType {
+  collectionName: 'positions';
+  info: {
+    singularName: 'position';
+    pluralName: 'positions';
+    displayName: 'position';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    employees: Attribute.Relation<
+      'api::position.position',
+      'oneToMany',
+      'api::start.start'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::position.position',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::position.position',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiRolRol extends Schema.CollectionType {
   collectionName: 'rols';
   info: {
@@ -991,6 +1026,11 @@ export interface ApiStartStart extends Schema.CollectionType {
       'manyToOne',
       'api::department.department'
     >;
+    position: Attribute.Relation<
+      'api::start.start',
+      'manyToOne',
+      'api::position.position'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1030,6 +1070,7 @@ declare module '@strapi/types' {
       'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
       'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
       'api::perm.perm': ApiPermPerm;
+      'api::position.position': ApiPositionPosition;
       'api::rol.rol': ApiRolRol;
       'api::start.start': ApiStartStart;
     }
