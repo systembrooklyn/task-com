@@ -18,6 +18,9 @@ module.exports = createCoreController("api::perm.perm", ({ strapi }) => ({
           canAddUser: data.canAddUser || false,
           canEditUser: data.canEditUser || false,
           canDeleteUser: data.canDeleteUser || false,
+          canAddDepartment: data.canAddDepartment || false,
+          canEditDepartment: data.canEditDepartment || false,
+          canDeleteDepartment: data.canDeleteDepartment || false,
         },
       });
 
