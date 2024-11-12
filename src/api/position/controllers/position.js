@@ -16,20 +16,24 @@ module.exports = createCoreController("api::position.position", ({ strapi }) => 
   },
   async create(ctx) {
     try {
-      const { name, departmentIds } = ctx.request.body.data;
+      const { name, departmentIds , companyID } = ctx.request.body.data;
 
       if (!name) {
         return ctx.badRequest("Position name is required.");
       }
 
-      const createdPosition = await strapi.entityService.create("api::position.position", {
-        data: {
-          name,
-          departments: departmentIds,
-        },
-      });
+      const createdPosition = await strapi.entityService.create(
+        "api::position.position",
+        {
+          data: {
+            name,
+            companyID,
+            departments: departmentIds,
+          },
+        }
+      );
 
-      return { data: createdPosition };
+      return { data: createdPosition, message: "Position created successfully" };
     } catch (error) {
       console.error("Error creating position:", error);
       ctx.throw(500, "An error occurred while creating the position");

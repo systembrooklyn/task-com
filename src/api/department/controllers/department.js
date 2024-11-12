@@ -55,7 +55,6 @@ module.exports = createCoreController(
         {
           data: {
             departmentName,
-
             employees: employeeIds,
           },
         }

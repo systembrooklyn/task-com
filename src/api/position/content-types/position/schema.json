@@ -21,5 +21,9 @@
       "target": "api::start.start",
       "mappedBy": "position"
     }
+    ,
+    "companyID": {
+      "type": "biginteger"
+    }
   }
 }
