@@ -820,6 +820,11 @@ export interface ApiDepartmentDepartment extends Schema.CollectionType {
       'api::start.start'
     >;
     companyID: Attribute.BigInteger;
+    positions: Attribute.Relation<
+      'api::department.department',
+      'manyToMany',
+      'api::position.position'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -955,6 +960,11 @@ export interface ApiPositionPosition extends Schema.CollectionType {
       'api::start.start'
     >;
     companyID: Attribute.BigInteger;
+    departments: Attribute.Relation<
+      'api::position.position',
+      'manyToMany',
+      'api::department.department'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

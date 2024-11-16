@@ -32,6 +32,12 @@
     },
     "companyID": {
       "type": "biginteger"
+    },
+    "positions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::position.position",
+      "mappedBy": "departments"
     }
   }
 }

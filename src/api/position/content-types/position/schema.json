@@ -20,10 +20,15 @@
       "relation": "oneToMany",
       "target": "api::start.start",
       "mappedBy": "position"
-    }
-    ,
+    },
     "companyID": {
       "type": "biginteger"
+    },
+    "departments": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::department.department",
+      "inversedBy": "positions"
     }
   }
 }
