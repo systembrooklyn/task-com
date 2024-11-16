@@ -18,7 +18,6 @@ module.exports = createCoreController("api::department.department", ({ strapi })
               position: true, // جلب بيانات المناصب المرتبطة بكل موظف
             },
           },
-          positions: true, // جلب بيانات المناصب المرتبطة بالقسم
         },
       }
     );
