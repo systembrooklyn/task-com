@@ -982,6 +982,38 @@ export interface ApiPositionPosition extends Schema.CollectionType {
   };
 }
 
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: 'projects';
+  info: {
+    singularName: 'project';
+    pluralName: 'projects';
+    displayName: 'project';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    neme: Attribute.String;
+    description: Attribute.String;
+    createdOwner: Attribute.String;
+    status: Attribute.Boolean;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiRolRol extends Schema.CollectionType {
   collectionName: 'rols';
   info: {
@@ -1059,6 +1091,39 @@ export interface ApiStartStart extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserAppUserApp extends Schema.CollectionType {
+  collectionName: 'user_apps';
+  info: {
+    singularName: 'user-app';
+    pluralName: 'user-apps';
+    displayName: 'userApp';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    password: Attribute.Password;
+    courses: Attribute.Text;
+    stdId: Attribute.UID;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-app.user-app',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-app.user-app',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1082,8 +1147,10 @@ declare module '@strapi/types' {
       'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
       'api::perm.perm': ApiPermPerm;
       'api::position.position': ApiPositionPosition;
+      'api::project.project': ApiProjectProject;
       'api::rol.rol': ApiRolRol;
       'api::start.start': ApiStartStart;
+      'api::user-app.user-app': ApiUserAppUserApp;
     }
   }
 }

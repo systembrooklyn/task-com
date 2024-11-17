@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_apps",
+  "info": {
+    "singularName": "user-app",
+    "pluralName": "user-apps",
+    "displayName": "userApp",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "password": {
+      "type": "password"
+    },
+    "courses": {
+      "type": "text"
+    },
+    "stdId": {
+      "type": "uid"
+    }
+  }
+}
