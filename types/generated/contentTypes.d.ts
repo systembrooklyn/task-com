@@ -1000,6 +1000,7 @@ export interface ApiProjectProject extends Schema.CollectionType {
     status: Attribute.Boolean;
     from: Attribute.String;
     to: Attribute.String;
+    companyID: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
