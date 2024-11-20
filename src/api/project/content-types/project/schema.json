@@ -4,7 +4,8 @@
   "info": {
     "singularName": "project",
     "pluralName": "projects",
-    "displayName": "project"
+    "displayName": "project",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -22,6 +23,12 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "from": {
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
     }
   }
 }
