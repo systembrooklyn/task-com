@@ -27,17 +27,18 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
 
   async create(ctx) {
     try {
-      const { name, employeeIds, companyID } = ctx.request.body.data;
+      const { neme, employeeIds, createdOwner, companyID } = ctx.request.body.data;
 
-      if (!name) {
-        return ctx.badRequest("Department name is required.");
+      if (!neme) {
+        return ctx.badRequest("project name is required.");
       }
 
       const createdProject = await strapi.entityService.create(
         "api::project.project",
         {
           data: {
-            name,
+            neme,
+            createdOwner,
             companyID,
             employees: employeeIds,
           },
