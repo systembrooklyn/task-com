@@ -23,6 +23,7 @@ module.exports = createCoreController("api::department.department", ({ strapi })
     );
     return { data: entities };
   },
+
   async create(ctx) {
     try {
       const { departmentName, employeeIds, companyID } = ctx.request.body.data;
