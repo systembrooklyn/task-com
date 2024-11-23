@@ -62,7 +62,7 @@
     },
     "project": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "api::project.project",
       "mappedBy": "employees"
     }

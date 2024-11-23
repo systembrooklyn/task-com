@@ -968,6 +968,11 @@ export interface ApiPositionPosition extends Schema.CollectionType {
       'manyToMany',
       'api::department.department'
     >;
+    projects: Attribute.Relation<
+      'api::position.position',
+      'manyToMany',
+      'api::project.project'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1090,6 +1095,11 @@ export interface ApiStartStart extends Schema.CollectionType {
       'api::start.start',
       'manyToOne',
       'api::position.position'
+    >;
+    project: Attribute.Relation<
+      'api::start.start',
+      'oneToMany',
+      'api::project.project'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
