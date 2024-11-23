@@ -35,6 +35,15 @@
     },
     "canDeleteDepartment": {
       "type": "boolean"
+    },
+    "canAddProject": {
+      "type": "boolean"
+    },
+    "canEditProject": {
+      "type": "boolean"
+    },
+    "canDeleteProject": {
+      "type": "boolean"
     }
   }
 }
