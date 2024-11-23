@@ -13,13 +13,13 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
       "api::project.project",
       {
         ...ctx.query,
-        //   populate: {
-        //     employees: {
-        //       populate: {
-        //         position: true, // جلب بيانات المناصب المرتبطة بكل موظف
-        //       },
-        //     },
-        //   },
+          populate: {
+            employees: {
+              populate: {
+                position: true, // جلب بيانات المناصب المرتبطة بكل موظف
+              },
+            },
+          },
       }
     );
     return { data: entities };
@@ -45,21 +45,21 @@ module.exports = createCoreController("api::project.project", ({ strapi }) => ({
         }
       );
 
-      // const populatedDepartment = await strapi.entityService.findOne(
-      //   "api::department.department",
-      //   createdDepartment.id,
-      //   {
-      //     populate: {
-      //       employees: {
-      //         populate: {
-      //           position: true,
-      //         },
-      //       },
-      //     },
-      //   }
-      // );
+      const populatedProject = await strapi.entityService.findOne(
+        "api::department.department",
+        createdProject.id,
+        {
+          populate: {
+            employees: {
+              populate: {
+                position: true,
+              },
+            },
+          },
+        }
+      );
 
-      return { data: createdProject };
+      return { data: populatedProject };
     } catch (error) {
       console.error("Error creating department:", error);
       ctx.throw(500, "An error occurred while creating the department");
