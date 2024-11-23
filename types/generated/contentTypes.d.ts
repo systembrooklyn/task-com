@@ -1098,7 +1098,7 @@ export interface ApiStartStart extends Schema.CollectionType {
     >;
     project: Attribute.Relation<
       'api::start.start',
-      'oneToMany',
+      'manyToOne',
       'api::project.project'
     >;
     createdAt: Attribute.DateTime;
