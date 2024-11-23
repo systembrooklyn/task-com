@@ -1004,6 +1004,16 @@ export interface ApiProjectProject extends Schema.CollectionType {
     from: Attribute.String;
     to: Attribute.String;
     companyID: Attribute.Integer;
+    employees: Attribute.Relation<
+      'api::project.project',
+      'oneToMany',
+      'api::start.start'
+    >;
+    positions: Attribute.Relation<
+      'api::project.project',
+      'manyToMany',
+      'api::position.position'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

@@ -32,6 +32,18 @@
     },
     "companyID": {
       "type": "integer"
+    },
+    "employees": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::start.start",
+      "mappedBy": "department"
+    },
+    "positions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::position.position",
+      "mappedBy": "departments"
     }
   }
 }
