@@ -37,13 +37,13 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::start.start",
-      "mappedBy": "department"
+      "mappedBy": "project"
     },
     "positions": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::position.position",
-      "mappedBy": "departments"
+      "mappedBy": "projects"
     }
   }
 }

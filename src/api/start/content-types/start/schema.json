@@ -59,6 +59,12 @@
       "relation": "manyToOne",
       "target": "api::position.position",
       "inversedBy": "employees"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::project.project",
+      "mappedBy": "employees"
     }
   }
 }

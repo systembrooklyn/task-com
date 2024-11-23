@@ -29,6 +29,12 @@
       "relation": "manyToMany",
       "target": "api::department.department",
       "inversedBy": "positions"
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "inversedBy": "positions"
     }
   }
 }
