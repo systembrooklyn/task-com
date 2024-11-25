@@ -70,6 +70,8 @@ module.exports = createCoreController(
       const { id } = ctx.params;
       const { data } = ctx.request.body;
 
+      console.log(data);
+
       // const updatedData = {
       //   departmentName: data.departmentName,
       //   employees: data.employees,
