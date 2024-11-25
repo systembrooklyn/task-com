@@ -68,7 +68,7 @@ module.exports = createCoreController(
     },
     async update(ctx) {
       const { id } = ctx.params;
-      const { data } = ctx.request.body.data;
+      const { data } = ctx.request.body;
 
       console.log(data);
 
