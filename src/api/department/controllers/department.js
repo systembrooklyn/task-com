@@ -61,16 +61,13 @@ module.exports = createCoreController("api::department.department", ({ strapi })
   },
   async update(ctx) {
     const { id } = ctx.params;
-    const { departmentName, employeeIds } = ctx.request.body.data;
+    const { data } = ctx.request.body;
 
     const updatedDepartment = await strapi.entityService.update(
       "api::department.department",
       id,
       {
-        data: {
-          departmentName,
-          employees: employeeIds,
-        },
+        data: data,
       }
     );
 
