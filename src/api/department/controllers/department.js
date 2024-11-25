@@ -65,7 +65,6 @@ module.exports = createCoreController("api::department.department", ({ strapi })
 
     const updatedData = {
       departmentName: data.departmentName,
-      companyID: data.companyID,
       employees: data.employees,
     };
 
