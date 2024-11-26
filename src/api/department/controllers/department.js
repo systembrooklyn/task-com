@@ -28,8 +28,7 @@ module.exports = createCoreController(
 
     async create(ctx) {
       try {
-        const { departmentName, employeeIds, positionIds, companyID } =
-          ctx.request.body.data;
+        const { departmentName, employeeIds, positionIds, companyID } = ctx.request.body.data;
 
         if (!departmentName) {
           return ctx.badRequest("Department name is required.");
@@ -69,9 +68,9 @@ module.exports = createCoreController(
     },
     async update(ctx) {
       const { id } = ctx.params;
-      const { departmentName, positionIds } = ctx.request.body.data;
+      const { departmentName, positionIds, employeeIds } = ctx.request.body.data;
 
-      console.log(data);
+      console.log("departmentName : " + departmentName + " employeeIds : " + employeeIds + " positionIds : " + positionIds);
 
       // const updatedData = {
       //   departmentName: data.departmentName,
@@ -84,7 +83,8 @@ module.exports = createCoreController(
         {
           data: {
             departmentName,
-            positions: positionIds, // استخدم الـ positionIds هنا
+            employees: employeeIds,
+            positions: positionIds,
           },
         }
       );
