@@ -28,7 +28,7 @@ module.exports = createCoreController(
 
     async create(ctx) {
       try {
-        const { departmentName, employeeIds, companyID } =
+        const { departmentName, employeeIds, positionIds, companyID } =
           ctx.request.body.data;
 
         if (!departmentName) {
@@ -42,25 +42,26 @@ module.exports = createCoreController(
               departmentName,
               companyID,
               employees: employeeIds,
+              positions: positionIds,
             },
           }
         );
 
-        const populatedDepartment = await strapi.entityService.findOne(
-          "api::department.department",
-          createdDepartment.id,
-          {
-            populate: {
-              employees: {
-                populate: {
-                  position: true,
-                },
-              },
-            },
-          }
-        );
+        // const populatedDepartment = await strapi.entityService.findOne(
+        //   "api::department.department",
+        //   createdDepartment.id,
+        //   {
+        //     populate: {
+        //       employees: {
+        //         populate: {
+        //           position: true,
+        //         },
+        //       },
+        //     },
+        //   }
+        // );
 
-        return { data: populatedDepartment };
+        return { data: createdDepartment, message: "Department created successfully" };
       } catch (error) {
         console.error("Error creating department:", error);
         ctx.throw(500, "An error occurred while creating the department");
@@ -68,7 +69,7 @@ module.exports = createCoreController(
     },
     async update(ctx) {
       const { id } = ctx.params;
-      const { data } = ctx.request.body;
+      const { departmentName, positionIds } = ctx.request.body.data;
 
       console.log(data);
 
@@ -81,9 +82,13 @@ module.exports = createCoreController(
         "api::department.department",
         id,
         {
-          data: data,
+          data: {
+            departmentName,
+            positions: positionIds, // استخدم الـ positionIds هنا
+          },
         }
       );
+
 
       return {
         data: updatedDepartment,
