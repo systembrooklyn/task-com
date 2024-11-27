@@ -28,7 +28,8 @@ module.exports = createCoreController(
 
     async create(ctx) {
       try {
-        const { departmentName, employeeIds, positionIds, companyID } = ctx.request.body.data;
+        const { departmentName, employeeIds, companyId } =
+          ctx.request.body.data;
 
         if (!departmentName) {
           return ctx.badRequest("Department name is required.");
@@ -39,28 +40,27 @@ module.exports = createCoreController(
           {
             data: {
               departmentName,
-              companyID,
+              companyId,
               employees: employeeIds,
-              positions: positionIds,
             },
           }
         );
 
-        // const populatedDepartment = await strapi.entityService.findOne(
-        //   "api::department.department",
-        //   createdDepartment.id,
-        //   {
-        //     populate: {
-        //       employees: {
-        //         populate: {
-        //           position: true,
-        //         },
-        //       },
-        //     },
-        //   }
-        // );
+        const populatedDepartment = await strapi.entityService.findOne(
+          "api::department.department",
+          createdDepartment.id,
+          {
+            populate: {
+              employees: {
+                populate: {
+                  position: true,
+                },
+              },
+            },
+          }
+        );
 
-        return { data: createdDepartment, message: "Department created successfully" };
+        return { data: populatedDepartment };
       } catch (error) {
         console.error("Error creating department:", error);
         ctx.throw(500, "An error occurred while creating the department");
@@ -68,9 +68,9 @@ module.exports = createCoreController(
     },
     async update(ctx) {
       const { id } = ctx.params;
-      const { departmentName, positionIds, employeeIds } = ctx.request.body.data;
+      const { data } = ctx.request.body;
 
-      console.log("departmentName : " + departmentName + " employeeIds : " + employeeIds + " positionIds : " + positionIds);
+      console.log(data);
 
       // const updatedData = {
       //   departmentName: data.departmentName,
@@ -81,19 +81,15 @@ module.exports = createCoreController(
         "api::department.department",
         id,
         {
-          data: {
-            departmentName,
-            employees: employeeIds,
-            positions: positionIds,
-          },
+          data: data,
         }
       );
 
-
-      return {
+      return ctx.send({
+        success: true,
         data: updatedDepartment,
         message: "Department updated successfully",
-      };
+      });
     },
     async delete(ctx) {
       const { id } = ctx.params;
