@@ -20,10 +20,15 @@ module.exports = createCoreController(
                 position: true, // جلب بيانات المناصب المرتبطة بكل موظف
               },
             },
+            position: {
+              populate: {
+                fields: ["name"],
+              },
+            },
           },
         }
       );
-      return { data: entities };
+      return ctx.send({ data: entities });
     },
 
     async create(ctx) {
@@ -60,7 +65,7 @@ module.exports = createCoreController(
           }
         );
 
-        return { data: populatedDepartment };
+        return ctx.send({ data: populatedDepartment });
       } catch (error) {
         console.error("Error creating department:", error);
         ctx.throw(500, "An error occurred while creating the department");
@@ -94,7 +99,7 @@ module.exports = createCoreController(
     async delete(ctx) {
       const { id } = ctx.params;
       await strapi.entityService.delete("api::department.department", id);
-      return { message: "Department deleted successfully" };
+      return ctx.send({ message: "Department deleted successfully" });
     },
   })
 );
