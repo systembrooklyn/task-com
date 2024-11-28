@@ -74,15 +74,23 @@ module.exports = createCoreController(
       const { data } = ctx.request.body;
 
       console.log(data);
-        const manager = await data.employees.find((employee) => employee.position === "Manager")
-        const viceManager = await data.employees.find((employee) => employee.position === "Vice Manager")
+        const manager = data.employees.find((employee) => employee.position === "Manager");
+        const viceManager = data.employees.find((employee) => employee.position === "Vice Manager");
 
-      console.log("manager : " + manager, "viceManager :", viceManager)
-      const updatedData = {
-        departmentName: data.departmentName,
-        managerId: manager ? manager.id : null,
-        viceManagerId: viceManager ? viceManager.id : null
-      };
+        if (!manager) {
+          return ctx.badRequest("Manager is required.");
+        }
+        if (!viceManager) {
+          return ctx.badRequest("Vice Manager is required.");
+        }
+
+        console.log(manager, viceManager);
+
+        const updatedData = {
+          departmentName: data.departmentName,
+          managerId: manager.id,
+          viceManagerId: viceManager.id,
+        };
 
       const updatedDepartment = await strapi.entityService.update(
         "api::department.department",
