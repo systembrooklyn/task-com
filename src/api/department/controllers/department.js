@@ -102,20 +102,6 @@ module.exports = createCoreController(
             console.log("Updated Department:", updatedDepartment);
           }
 
-          if (item.action === "updateEmployee") {
-            // تحديث الموظف
-            const updatedEmployee = await strapi.entityService.update(
-              "api::employee.employee",
-              item.employeeId, // هنا لو كان عندك جدول موظفين
-              {
-                data: {
-                  position: item.newPosition,
-                  department: item.newDepartmentId,
-                },
-              }
-            );
-            console.log("Updated Employee:", updatedEmployee);
-          }
         }
 
         // إرسال استجابة نجاح بعد تنفيذ العمليات
