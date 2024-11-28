@@ -70,55 +70,55 @@ module.exports = createCoreController(
       }
     },
     async update(ctx) {
-  const { data } = ctx.request.body; // جلب البيانات المرسلة من الـ Frontend
+    const { id } = ctx.params;
+    const { data } = ctx.request.body;
 
-  try {
-    // التكرار عبر العمليات المختلفة في البيانات
-    for (const item of data) {
-      if (item.action === "updateDepartment") {
-        // تحديث القسم
-        const updatedEmployees = item.employees.map((employee) => {
-          if (employee.position.name === "Manager" && item.managerId) {
-            employee.id = item.managerId;
-          } else if (
-            employee.position.name === "Vice Manager" &&
-            item.viceManagerId
-          ) {
-            employee.id = item.viceManagerId;
-          }
-          return employee;
-        });
+    console.log(data);
 
-        // تحديث بيانات القسم مع الموظفين المحدثين
-        const updatedDepartment = await strapi.entityService.update(
-          "api::department.department", // التأكد من أن هذا هو الكائن الصحيح للقسم
-          item.departmentId,
-          {
-            data: {
-              departmentName: item.departmentName, // اسم القسم
-              employees: updatedEmployees, // الموظفين المحدثين
-            },
-          }
-        );
-
-        console.log("Updated Department:", updatedDepartment);
-      }
+    // تحقق من وجود employees في الطلب
+    if (!data.employees || data.employees.length === 0) {
+        return ctx.badRequest("Employees data is missing or empty.");
     }
 
-    // إرسال استجابة نجاح بعد تنفيذ العمليات
-    return ctx.send({
-      success: true,
-      message: "Operations completed successfully",
-      data: data,
+    // العثور على الموظف الذي يشغل المنصب
+    const updatedEmployees = data.employees.map(employee => {
+        if (employee.position.name === "Manager" && data.managerId) {
+            // تحديث id للموظف الذي يشغل منصب Manager
+            employee.id = data.managerId;
+        } else if (employee.position.name === "Vice Manager" && data.viceManagerId) {
+            // تحديث id للموظف الذي يشغل منصب Vice Manager
+            employee.id = data.viceManagerId;
+        }
+        return employee;
     });
-  } catch (error) {
-    console.error("Error executing operations:", error);
-    return ctx.throw(
-      500,
-      "An error occurred while executing the operations"
-    );
-  }
+
+    // البيانات المعدلة للـ department
+    const updatedData = {
+        departmentName: data.departmentName,
+        employees: updatedEmployees,  // إرسال الموظفين المعدلين
+    };
+
+    try {
+        // تحديث القسم بالبيانات المعدلة
+        const updatedDepartment = await strapi.entityService.update(
+            "api::department.department",
+            id,
+            {
+                data: updatedData,
+            }
+        );
+
+        return ctx.send({
+            success: true,
+            data: updatedDepartment,
+            message: "Department updated successfully",
+        });
+    } catch (error) {
+        console.error("Error updating department:", error);
+        return ctx.throw(500, "An error occurred while updating the department");
+    }
 },
+
 
     async delete(ctx) {
       const { id } = ctx.params;
