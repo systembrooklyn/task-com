@@ -21,9 +21,7 @@ module.exports = createCoreController(
               },
             },
             position: {
-              populate: {
-                fields: ["name"],
-              },
+              populate: "*",
             },
           },
         }
@@ -76,17 +74,21 @@ module.exports = createCoreController(
       const { data } = ctx.request.body;
 
       console.log(data);
+        const manager = await data.employees.find((employee) => employee.position === "Manager")
+        const viceManager = await data.employees.find((employee) => employee.position === "Vice Manager")
 
-      // const updatedData = {
-      //   departmentName: data.departmentName,
-      //   employees: data.employees,
-      // };
+      console.log("manager : " + manager, "viceManager :", viceManager)
+      const updatedData = {
+        departmentName: data.departmentName,
+        managerId: manager ? manager.id : null,
+        viceManagerId: viceManager ? viceManager.id : null
+      };
 
       const updatedDepartment = await strapi.entityService.update(
         "api::department.department",
         id,
         {
-          data: data,
+          data: updatedData,
         }
       );
 
