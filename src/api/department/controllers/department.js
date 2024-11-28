@@ -70,42 +70,56 @@ module.exports = createCoreController(
       }
     },
     async update(ctx) {
-      const { id } = ctx.params;
-      const { data } = ctx.request.body;
+    const { id } = ctx.params;
+    const { data } = ctx.request.body;
 
-      console.log(data);
-        const manager = data.employees.find((employee) => employee.position === "Manager");
-        const viceManager = data.employees.find((employee) => employee.position === "Vice Manager");
+    console.log(data);
 
-        if (!manager) {
-          return ctx.badRequest("Manager is required.");
+    // تحقق من وجود employees في الطلب
+    if (!data.employees || data.employees.length === 0) {
+        return ctx.badRequest("Employees data is missing or empty.");
+    }
+
+    // العثور على الموظف الذي يشغل المنصب
+    const updatedEmployees = data.employees.map(employee => {
+        if (employee.position.name === "Manager" && data.managerId) {
+            // تحديث id للموظف الذي يشغل منصب Manager
+            employee.id = data.managerId;
+        } else if (employee.position.name === "Vice Manager" && data.viceManagerId) {
+            // تحديث id للموظف الذي يشغل منصب Vice Manager
+            employee.id = data.viceManagerId;
         }
-        if (!viceManager) {
-          return ctx.badRequest("Vice Manager is required.");
-        }
+        return employee;
+    });
 
-        console.log(manager, viceManager);
+    // البيانات المعدلة للـ department
+    const updatedData = {
+        departmentName: data.departmentName,
+        employees: updatedEmployees,  // إرسال الموظفين المعدلين
+    };
 
-        const updatedData = {
-          departmentName: data.departmentName,
-          managerId: manager.id,
-          viceManagerId: viceManager.id,
-        };
+    try {
+        // تحديث القسم بالبيانات المعدلة
+        const updatedDepartment = await strapi.entityService.update(
+            "api::department.department",
+            id,
+            {
+                data: updatedData,
+            }
+        );
 
-      const updatedDepartment = await strapi.entityService.update(
-        "api::department.department",
-        id,
-        {
-          data: updatedData,
-        }
-      );
+        return ctx.send({
+            success: true,
+            data: updatedDepartment,
+            message: "Department updated successfully",
+        });
+    } catch (error) {
+        console.error("Error updating department:", error);
+        return ctx.throw(500, "An error occurred while updating the department");
+    }
+},
 
-      return ctx.send({
-        success: true,
-        data: updatedDepartment,
-        message: "Department updated successfully",
-      });
-    },
+
     async delete(ctx) {
       const { id } = ctx.params;
       await strapi.entityService.delete("api::department.department", id);
