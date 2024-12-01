@@ -80,15 +80,14 @@ module.exports = createCoreController(
         return ctx.badRequest("Employees data is missing or empty.");
       }
 
+
       // العثور على الموظف الذي يشغل المنصب
       const updatedEmployees = data.employees.map((employee) => {
         if (employee.position.name === "Manager" && data.managerId) {
           // تحديث id للموظف الذي يشغل منصب Manager
           employee.id = data.managerId;
-        } else if (
-          employee.position.name === "Vice Manager" &&
-          data.viceManagerId
-        ) {
+        }
+        if (employee.position.name === "Vice Manager" && data.viceManagerId) {
           // تحديث id للموظف الذي يشغل منصب Vice Manager
           employee.id = data.viceManagerId;
         }

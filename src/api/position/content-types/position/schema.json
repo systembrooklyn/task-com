@@ -28,7 +28,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::department.department",
-      "inversedBy": "positions"
+      "mappedBy": "position"
     },
     "projects": {
       "type": "relation",

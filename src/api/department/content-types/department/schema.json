@@ -33,11 +33,11 @@
     "companyID": {
       "type": "biginteger"
     },
-    "positions": {
+    "position": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::position.position",
-      "mappedBy": "departments"
+      "inversedBy": "departments"
     }
   }
 }

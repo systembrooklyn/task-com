@@ -820,7 +820,7 @@ export interface ApiDepartmentDepartment extends Schema.CollectionType {
       'api::start.start'
     >;
     companyID: Attribute.BigInteger;
-    positions: Attribute.Relation<
+    position: Attribute.Relation<
       'api::department.department',
       'manyToMany',
       'api::position.position'
