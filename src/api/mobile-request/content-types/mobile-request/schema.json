@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobile_requests",
+  "info": {
+    "singularName": "mobile-request",
+    "pluralName": "mobile-requests",
+    "displayName": "mobileRequest"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "student_num": {
+      "type": "biginteger"
+    },
+    "name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "GroupID": {
+      "type": "string"
+    }
+  }
+}

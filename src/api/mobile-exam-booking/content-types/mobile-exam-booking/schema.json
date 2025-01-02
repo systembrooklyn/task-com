@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobile_exam_bookings",
+  "info": {
+    "singularName": "mobile-exam-booking",
+    "pluralName": "mobile-exam-bookings",
+    "displayName": "mobileExamBooking"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "student_num": {
+      "type": "biginteger"
+    },
+    "group": {
+      "type": "biginteger"
+    },
+    "Module": {
+      "type": "string"
+    },
+    "Date": {
+      "type": "string"
+    },
+    "Time": {
+      "type": "string"
+    },
+    "Branch": {
+      "type": "string"
+    },
+    "Notes": {
+      "type": "string"
+    }
+  }
+}

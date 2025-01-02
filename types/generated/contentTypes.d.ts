@@ -856,6 +856,114 @@ export interface ApiInvitationEmailInvitationEmail
   };
 }
 
+export interface ApiMobileExamBookingMobileExamBooking
+  extends Schema.CollectionType {
+  collectionName: 'mobile_exam_bookings';
+  info: {
+    singularName: 'mobile-exam-booking';
+    pluralName: 'mobile-exam-bookings';
+    displayName: 'mobileExamBooking';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    student_num: Attribute.BigInteger;
+    group: Attribute.BigInteger;
+    Module: Attribute.String;
+    Date: Attribute.String;
+    Time: Attribute.String;
+    Branch: Attribute.String;
+    Notes: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mobile-exam-booking.mobile-exam-booking',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mobile-exam-booking.mobile-exam-booking',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMobileRequestMobileRequest extends Schema.CollectionType {
+  collectionName: 'mobile_requests';
+  info: {
+    singularName: 'mobile-request';
+    pluralName: 'mobile-requests';
+    displayName: 'mobileRequest';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    student_num: Attribute.BigInteger;
+    name: Attribute.String;
+    message: Attribute.String;
+    type: Attribute.String;
+    Email: Attribute.Email;
+    phone: Attribute.String;
+    GroupID: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mobile-request.mobile-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mobile-request.mobile-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMobileUserUpdateMobileUserUpdate
+  extends Schema.CollectionType {
+  collectionName: 'mobile_user_updates';
+  info: {
+    singularName: 'mobile-user-update';
+    pluralName: 'mobile-user-updates';
+    displayName: 'mobileUserUpdate';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    student_num: Attribute.BigInteger;
+    email: Attribute.Email;
+    phone: Attribute.String;
+    password: Attribute.String;
+    status: Attribute.Boolean & Attribute.DefaultTo<true>;
+    ppURL: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mobile-user-update.mobile-user-update',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mobile-user-update.mobile-user-update',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiPermPerm extends Schema.CollectionType {
   collectionName: 'perms';
   info: {
@@ -968,6 +1076,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
       'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
+      'api::mobile-exam-booking.mobile-exam-booking': ApiMobileExamBookingMobileExamBooking;
+      'api::mobile-request.mobile-request': ApiMobileRequestMobileRequest;
+      'api::mobile-user-update.mobile-user-update': ApiMobileUserUpdateMobileUserUpdate;
       'api::perm.perm': ApiPermPerm;
       'api::rol.rol': ApiRolRol;
       'api::start.start': ApiStartStart;

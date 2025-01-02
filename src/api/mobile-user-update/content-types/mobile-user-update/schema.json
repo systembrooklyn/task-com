@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mobile_user_updates",
+  "info": {
+    "singularName": "mobile-user-update",
+    "pluralName": "mobile-user-updates",
+    "displayName": "mobileUserUpdate",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "student_num": {
+      "type": "biginteger"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    },
+    "ppURL": {
+      "type": "string"
+    }
+  }
+}
