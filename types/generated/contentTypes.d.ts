@@ -791,6 +791,63 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiDepartmentDepartment extends Schema.CollectionType {
+  collectionName: 'departments';
+  info: {
+    singularName: 'department';
+    pluralName: 'departments';
+    displayName: 'Department';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    departmentName: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    employees: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::start.start'
+    >;
+    companyID: Attribute.BigInteger;
+    position: Attribute.Relation<
+      'api::department.department',
+      'manyToMany',
+      'api::position.position'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::department.department'
+    >;
+    locale: Attribute.String;
+  };
+}
+
 export interface ApiForgetPassEmailForgetPassEmail
   extends Schema.CollectionType {
   collectionName: 'forget_pass_emails';
@@ -980,11 +1037,109 @@ export interface ApiPermPerm extends Schema.CollectionType {
     canAddUser: Attribute.Boolean;
     canEditUser: Attribute.Boolean;
     canDeleteUser: Attribute.Boolean;
+    canAddDepartment: Attribute.Boolean;
+    canEditDepartment: Attribute.Boolean;
+    canDeleteDepartment: Attribute.Boolean;
+    canAddProject: Attribute.Boolean;
+    canEditProject: Attribute.Boolean;
+    canDeleteProject: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::perm.perm', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::perm.perm', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPositionPosition extends Schema.CollectionType {
+  collectionName: 'positions';
+  info: {
+    singularName: 'position';
+    pluralName: 'positions';
+    displayName: 'position';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    employees: Attribute.Relation<
+      'api::position.position',
+      'oneToMany',
+      'api::start.start'
+    >;
+    companyID: Attribute.BigInteger;
+    departments: Attribute.Relation<
+      'api::position.position',
+      'manyToMany',
+      'api::department.department'
+    >;
+    projects: Attribute.Relation<
+      'api::position.position',
+      'manyToMany',
+      'api::project.project'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::position.position',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::position.position',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: 'projects';
+  info: {
+    singularName: 'project';
+    pluralName: 'projects';
+    displayName: 'project';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    neme: Attribute.String;
+    description: Attribute.String;
+    createdOwner: Attribute.String;
+    status: Attribute.Boolean;
+    from: Attribute.String;
+    to: Attribute.String;
+    companyID: Attribute.Integer;
+    employees: Attribute.Relation<
+      'api::project.project',
+      'oneToMany',
+      'api::start.start'
+    >;
+    positions: Attribute.Relation<
+      'api::project.project',
+      'manyToMany',
+      'api::position.position'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1039,6 +1194,21 @@ export interface ApiStartStart extends Schema.CollectionType {
     companyId: Attribute.BigInteger;
     name: Attribute.String;
     role: Attribute.Relation<'api::start.start', 'manyToOne', 'api::rol.rol'>;
+    department: Attribute.Relation<
+      'api::start.start',
+      'manyToOne',
+      'api::department.department'
+    >;
+    position: Attribute.Relation<
+      'api::start.start',
+      'manyToOne',
+      'api::position.position'
+    >;
+    project: Attribute.Relation<
+      'api::start.start',
+      'manyToOne',
+      'api::project.project'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1049,6 +1219,39 @@ export interface ApiStartStart extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::start.start',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiUserAppUserApp extends Schema.CollectionType {
+  collectionName: 'user_apps';
+  info: {
+    singularName: 'user-app';
+    pluralName: 'user-apps';
+    displayName: 'userApp';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    password: Attribute.Password;
+    courses: Attribute.Text;
+    stdId: Attribute.UID;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-app.user-app',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-app.user-app',
       'oneToOne',
       'admin::user'
     > &
@@ -1074,14 +1277,18 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::department.department': ApiDepartmentDepartment;
       'api::forget-pass-email.forget-pass-email': ApiForgetPassEmailForgetPassEmail;
       'api::invitation-email.invitation-email': ApiInvitationEmailInvitationEmail;
       'api::mobile-exam-booking.mobile-exam-booking': ApiMobileExamBookingMobileExamBooking;
       'api::mobile-request.mobile-request': ApiMobileRequestMobileRequest;
       'api::mobile-user-update.mobile-user-update': ApiMobileUserUpdateMobileUserUpdate;
       'api::perm.perm': ApiPermPerm;
+      'api::position.position': ApiPositionPosition;
+      'api::project.project': ApiProjectProject;
       'api::rol.rol': ApiRolRol;
       'api::start.start': ApiStartStart;
+      'api::user-app.user-app': ApiUserAppUserApp;
     }
   }
 }

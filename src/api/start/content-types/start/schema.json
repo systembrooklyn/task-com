@@ -47,6 +47,24 @@
       "relation": "manyToOne",
       "target": "api::rol.rol",
       "inversedBy": "users"
+    },
+    "department": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::department.department",
+      "inversedBy": "employees"
+    },
+    "position": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::position.position",
+      "inversedBy": "employees"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::project.project",
+      "inversedBy": "employees"
     }
   }
 }
